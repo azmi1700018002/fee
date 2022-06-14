@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/screens/BottomBar/BottomBarMenu/notification.dart';
 import 'package:flutter_auth/screens/BottomBar/BottomBarMenu/setting.dart';
 import 'package:flutter_auth/screens/dashboard.dart';
 
@@ -96,7 +97,7 @@ class _BottomBarState extends State<BottomBar> {
                       minWidth: 40,
                       onPressed: () {
                         setState(() {
-                          currentScreen = Dashboard();
+                          currentScreen = Notice();
                           currentTab = 0;
                         });
                       },

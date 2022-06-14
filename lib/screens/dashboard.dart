@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/BackgroundLogin/backgroundLogin.dart';
+import 'package:flutter_auth/screens/Menu/DataNasabah/tambah_debitur.dart';
 import 'package:flutter_auth/screens/Menu/DataNasabah/datanasabah.dart';
-import 'package:flutter_auth/screens/Menu/DataUser/datauser.dart';
+import 'package:flutter_auth/screens/Menu/DataNasabah/formaddnasabah.dart';
+import 'package:flutter_auth/screens/Menu/DataNasabah/list_debitur.dart';
 import 'package:flutter_auth/screens/Menu/about.dart';
 import 'package:flutter_auth/screens/Menu/manual.dart';
 import 'package:flutter_auth/screens/Menu/master_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_auth/network/api.dart';
 import 'dart:convert';
+import 'Menu/DataNasabah/cari_semua_debitur.dart';
 import 'login.dart';
 
 class Dashboard extends StatefulWidget {
@@ -42,25 +46,26 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
+      body: BackgroundLogin(
+        child: Stack(
         overflow: Overflow.visible,
         fit: StackFit.loose,
         children: <Widget>[
-          ClipPath(
-            // clipper: ClippingClass(),
-            child: Container(
-              width: double.infinity,
-              // height: MediaQuery.of(context).size.height*4/7,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xff40dedf), Color(0xff0fb2ea)],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
+          // ClipPath(
+          //   // clipper: ClippingClass(),
+          //   child: Container(
+          //     width: double.infinity,
+          //     // height: MediaQuery.of(context).size.height*4/7,
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [Color(0xff40dedf), Color(0xff0fb2ea)],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          new Positioned(
             left: 20,
             top: 80,
             height: 60,
@@ -70,28 +75,28 @@ class _DashboardState extends State<Dashboard> {
               child: Image.asset("assets/images/home_images/user.png"),
             ),
           ),
-          Positioned(
+          new Positioned(
             left: 20,
-            top: 150,
+            top: 165,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text('Hello',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 32,
                     )),
                 Text("${nama_lengkap} \nanda login sebagai ${nama_grup} ",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 18,
                     )),
               ],
             ),
           ),
-          Positioned(
+          new Positioned(
             left: 20,
-            top: 250,
+            top: 280,
             right: 20,
             child: Column(
               children: <Widget>[
@@ -130,16 +135,19 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
           ),
-          Positioned(
+          new Positioned(
             left: 20,
-            top: 450,
+            top: 480,
             right: 20,
             child: Column(
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => cob2()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TambahDebitur()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -153,7 +161,7 @@ class _DashboardState extends State<Dashboard> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DataNasabah()));
+                                  builder: (context) => CariDebitur()));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -173,6 +181,7 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
       ),
+      )
     );
   }
 

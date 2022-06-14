@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _url = 'http://192.168.100.207:8080/api/';
+  final String _url = 'https://fleetime.herokuapp.com/api/';
+  // final String _url = 'http://192.168.100.207:8080/api/';
   // 192.168.1.2 is my IP, change with your IP address
   var token;
 
@@ -27,16 +28,6 @@ class Network {
     );
   }
 
-  // updateData(apiURL, id, Map<String, String> data ) async {
-  //   var fullUrl = _url + apiURL + '/' + id.toString();
-  //   await _getToken();
-  //   return await http.put(
-  //     fullUrl,
-  //     headers: _setHeaders(),
-  //     body: jsonEncode(data),
-  //   );
-  // }
-
   updateData(apiURL, id, body ) async {
     var fullUrl = _url + apiURL + '/' + id.toString();
     await _getToken();
@@ -46,15 +37,6 @@ class Network {
       body: json.encode(body),
     );
   }
-
-  // updateData(apiURL, id) async {
-  //   var fullUrl = _url + apiURL + '/' + id.toString();
-  //   await _getToken();
-  //   return await http.put(
-  //     fullUrl,
-  //     headers: _setHeaders(),
-  //   );
-  // }
 
   deleteData(apiURL, id) async {
     var fullUrl = _url + apiURL + '/' + id.toString();
