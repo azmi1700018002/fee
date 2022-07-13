@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/network/api.dart';
 import 'package:flutter_auth/screens/BottomBar/Master.dart';
 import '../BackgroundLogin/backgroundLogin.dart';
-import 'register.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dashboard.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -142,13 +141,11 @@ class _LoginState extends State<Login> {
     setState(() {
       _isLoading = true;
     });
-    var data = {'username': username, 'password': password};
-
+    var data = {'username': username, 'password': password,};
     var res = await Network().auth(data, 'login');
     print(data);
 
     var body = json.decode(res.body);
-
     if (res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));

@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/screens/Menu/DataNasabah/detail_debitur.dart';
+import 'package:flutter_auth/screens/Menu/DataNasabah/review_hasil_analisa/detail_debitur.dart';
 import 'package:search_page/search_page.dart';
-import '../../../Models/nasabah.dart';
-import '../../../network/nasabah_service.dart';
+import '../../../../Models/mstdebitur.dart';
+import '../../../../network/debitur_service.dart';
 import 'list_debitur.dart';
 
 class CariDebitur extends StatefulWidget {
@@ -15,19 +16,19 @@ class CariDebitur extends StatefulWidget {
 }
 
 class _CariDebiturState extends State<CariDebitur> {
-  final ApiService api = ApiService();
-  List<Nasabah> nasabahList = [];
+  final MstdebiturApiService api = MstdebiturApiService();
+  List<Mstdebitur> nasabahList;
 
   Widget build(BuildContext context) {
     // ignore: prefer_conditional_assignment, unnecessary_null_comparison
     if (nasabahList == null) {
       // ignore: deprecated_member_use, prefer_collection_literals
-      nasabahList = <Nasabah>[];
+      nasabahList = <Mstdebitur>[];
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Data Nasabah'),
+        title: Text('Review Semua Data Debitur'),
       ),
       body: Container(
         child: Center(
@@ -35,7 +36,7 @@ class _CariDebiturState extends State<CariDebitur> {
             future: loadList(),
             builder: (context, snapshot) {
               return nasabahList.length > 0
-                  ? ListDebitur(nasabah: nasabahList)
+                  ? ListDebitur(mstdebitur: nasabahList)
                   : Text('No Data');
             },
           ),
@@ -45,20 +46,20 @@ class _CariDebiturState extends State<CariDebitur> {
           tooltip: 'Search people',
           onPressed: () => showSearch(
                 context: context,
-                delegate: SearchPage<Nasabah>(
+                delegate: SearchPage<Mstdebitur>(
                     onQueryUpdate: (s) => print(s),
                     items: nasabahList,
-                    searchLabel: 'Search people',
+                    searchLabel: 'Cari Nasabah',
                     suggestion: Center(
-                      child: Text('Filter people by name, surname or age'),
+                      child: Text('Pencarian berdasarkan nama,alamat,ktp'),
                     ),
                     failure: Center(
-                      child: Text('No person found :('),
+                      child: Text('Data tidak ditemukan'),
                     ),
                     filter: (nasabah) => [
-                          nasabah.nama_debitur,
+                          nasabah.namaDebitur,
                           nasabah.alamat,
-                          nasabah.no_ktp.toString(),
+                          nasabah.relationship.toString(),
                         ],
                     builder: (nasabah) => Card(
                         shape: Border(
@@ -69,9 +70,9 @@ class _CariDebiturState extends State<CariDebitur> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   ListTile(
-                                    title: Text(nasabah.nama_debitur),
+                                    title: Text(nasabah.namaDebitur),
                                     subtitle: Text(nasabah.alamat),
-                                    trailing: Text('${nasabah.no_ktp}'),
+                                    trailing: Text('${nasabah.relationship}'),
                                   ),
                                   Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -92,10 +93,10 @@ class _CariDebiturState extends State<CariDebitur> {
                                                                   Text('hapus'),
                                                               onPressed:
                                                                   () async {
-                                                                Navigator.of(context).pop();
-                                                                api.deleteNasabah(
-                                                                    nasabah.id);
-                                                                Navigator.of(context).pop();
+                                                                // Navigator.of(context).pop();
+                                                                // api.deleteNasabah(
+                                                                //     nasabah.nik);
+                                                                // Navigator.of(context).pop();
                                                               }),
                                                           TextButton(
                                                               child:
@@ -123,7 +124,7 @@ class _CariDebiturState extends State<CariDebitur> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     DetailDebitur(
-                                                        nasabah: nasabah),
+                                                        mstdebitur: nasabah),
                                               ),
                                             );
                                           },
@@ -141,7 +142,7 @@ class _CariDebiturState extends State<CariDebitur> {
   }
 
   Future loadList() {
-    Future<List<Nasabah>> futureNasabah = api.getNasabah();
+    Future<List<Mstdebitur>> futureNasabah = api.getNasabah();
     futureNasabah.then((nasabahList) {
       if (mounted) {
         setState(() {

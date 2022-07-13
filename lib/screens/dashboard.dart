@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/BackgroundLogin/backgroundLogin.dart';
-import 'package:flutter_auth/screens/Menu/DataNasabah/tambah_debitur.dart';
-import 'package:flutter_auth/screens/Menu/DataNasabah/datanasabah.dart';
-import 'package:flutter_auth/screens/Menu/DataNasabah/formaddnasabah.dart';
-import 'package:flutter_auth/screens/Menu/DataNasabah/list_debitur.dart';
-import 'package:flutter_auth/screens/Menu/about.dart';
-import 'package:flutter_auth/screens/Menu/manual.dart';
-import 'package:flutter_auth/screens/Menu/master_input.dart';
+import 'package:flutter_auth/Models/mstdebitur.dart';
+import 'package:flutter_auth/screens/Menu/DataNasabah/input_agunan/list_pengajuan_debitur.dart';
+import 'package:flutter_auth/screens/Menu/DataNasabah/pengajuan_kredit/t_datamasterdebitur.dart';
+import 'package:flutter_auth/screens/Menu/DataNasabah/upload_berkas/list_pengajuan_debitur.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_auth/network/api.dart';
 import 'dart:convert';
-import 'Menu/DataNasabah/cari_semua_debitur.dart';
+import 'Menu/DataNasabah/analisa _pengajuan_kredit/list_pengajuan_debitur.dart';
+import 'Menu/DataNasabah/review_hasil_analisa/cari_semua_debitur.dart';
 import 'login.dart';
 
 class Dashboard extends StatefulWidget {
@@ -19,6 +16,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final nasabahSave = new Mstdebitur();
   String nama_lengkap = '';
   String nama_grup = '';
 
@@ -44,136 +42,277 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: BackgroundLogin(
-        child: Stack(
-        overflow: Overflow.visible,
-        fit: StackFit.loose,
+        body: Stack(
+          fit: StackFit.loose,
         children: <Widget>[
-          // ClipPath(
-          //   // clipper: ClippingClass(),
-          //   child: Container(
-          //     width: double.infinity,
-          //     // height: MediaQuery.of(context).size.height*4/7,
-          //     decoration: BoxDecoration(
-          //       gradient: LinearGradient(
-          //         begin: Alignment.topCenter,
-          //         end: Alignment.bottomCenter,
-          //         colors: [Color(0xff40dedf), Color(0xff0fb2ea)],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          new Positioned(
-            left: 20,
-            top: 80,
-            height: 60,
-            width: 60,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.asset("assets/images/home_images/user.png"),
+          Container(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 7 / 7,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xff01579b), Color(0xff0fb2ea)],
+              ),
             ),
-          ),
-          new Positioned(
-            left: 20,
-            top: 165,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('Hello',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 32,
-                    )),
-                Text("${nama_lengkap} \nanda login sebagai ${nama_grup} ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    )),
-              ],
-            ),
-          ),
-          new Positioned(
-            left: 20,
-            top: 280,
-            right: 20,
-            child: Column(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => About()));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      _customCard(
-                        imageUrl: "info.png",
-                        item: "About",
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Manuals()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            _customCard(
-                              imageUrl: "manuals.png",
-                              item: "Manuals",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+              children: [
+                SizedBox(
+                  height: 80,
                 ),
-              ],
-            ),
-          ),
-          new Positioned(
-            left: 20,
-            top: 480,
-            right: 20,
-            child: Column(
-              children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 15, right: 15),
+                    alignment: Alignment.center,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.asset("assets/images/home_images/user.png"),
+                    ),
+                  ),
+                  Text('Selamat Datang\n${nama_lengkap} ',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 19, fontWeight: FontWeight.bold
+                      )),
+                      SizedBox(
+                        width: 137,
+                      ),
+                      Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      )
+                ]),
+                // Text(" anda login sebagai ${nama_grup} ",
+                //     style: TextStyle(
+                //       color: Colors.black,
+                //       fontSize: 18,
+                //     )),
+                SizedBox(
+                  height: 30,
+                ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () => {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                TambahDebitur()));
+                                T_DataMasterDebitur(mstdebitur: nasabahSave)))
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      _customCard(
-                        imageUrl: "tambah.png",
-                        item: "Input Data",
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CariDebitur()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            _customCard(
-                              imageUrl: "datanasabah.png",
-                              item: "Nasabah",
+                  child: Card(
+                    margin: EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      margin: EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: Icon(
+                                Icons.send_and_archive,
+                                color: Colors.blue.shade400,
+                              )),
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Pengajuan Kredit",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text("Input data calon debitur/debitur"),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
-                    ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ListPengajuanUploadBerkas()))
+                  },
+                  child: Card(
+                    margin: EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      margin: EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: Icon(
+                                Icons.upload,
+                                color: Colors.red.shade400,
+                              )),
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Upload Berkas",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                      "Upload berkas atau dokumen pendukung pada debitur"),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ListPengajuanInputAgunan()))
+                  },
+                  child: Card(
+                    margin: EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      margin: EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: Icon(
+                                Icons.input,
+                                color: Colors.blue.shade900,
+                              )),
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Input Agunan",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text("Input data agunan pada debitur"),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ListPengajuanAnalisaKredit()))
+                  },
+                  child: Card(
+                    margin: EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      margin: EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: Icon(
+                                Icons.analytics,
+                                color: Colors.orange.shade400,
+                              )),
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Analisa Pengajuan Kredit",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                      "Input data analisa pengajuan kredit pada debitur"),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CariDebitur()))
+                  },
+                  child: Card(
+                    margin: EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      margin: EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: Icon(
+                                Icons.reviews,
+                                color: Colors.green.shade800,
+                              )),
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Review Hasil Analisa",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                      "Hasil pengajuan dari debitur yang telah di inputkan"),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -181,7 +320,6 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
       ),
-      )
     );
   }
 
@@ -230,22 +368,4 @@ _customCard({String imageUrl, String item}) {
       ),
     ),
   );
-}
-
-class ClippingClass extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0.0, size.height);
-    var controlPoint = Offset(size.width - (size.width / 2), size.height - 120);
-    var endPoint = Offset(size.width, size.height);
-    path.quadraticBezierTo(
-        controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
-    path.lineTo(size.width, 0.0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

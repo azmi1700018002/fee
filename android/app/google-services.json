@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "295399626196",
+    "project_id": "fcm-kreditmikro",
+    "storage_bucket": "fcm-kreditmikro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295399626196:android:83b79e5b558d275eb07241",
+        "android_client_info": {
+          "package_name": "com.example.flutter_auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295399626196-neav37rj21k32kb363mf358dpu7ll33j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBldIa8N-w5zd5_-NMA_8VnK2BYuG8Qn0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295399626196-neav37rj21k32kb363mf358dpu7ll33j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,19 +1,19 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../Models/nasabah.dart';
-import '../../../network/nasabah_service.dart';
+import '../../../../Models/mstdebitur.dart';
+import '../../../../network/debitur_service.dart';
 import 'detail_debitur.dart';
 
 class ListDebitur extends StatelessWidget {
-  final List<Nasabah> nasabah;
-  ListDebitur({Key key,  this.nasabah}) : super(key: key);
-  final ApiService api = ApiService();
+  final List<Mstdebitur> mstdebitur;
+  ListDebitur({Key key,  this.mstdebitur}) : super(key: key);
+  final MstdebiturApiService api = MstdebiturApiService();
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: nasabah == null ? 0 : nasabah.length,
+        itemCount: mstdebitur == null ? 0 : mstdebitur.length,
         itemBuilder: (BuildContext context, int index) {
           return Card(
               shape: Border(left: BorderSide(color: Colors.green, width: 5)),
@@ -23,13 +23,13 @@ class ListDebitur extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          nasabah[index].nama_debitur,
+                          mstdebitur[index].namaDebitur,
                         ),
                         Text(
-                          nasabah[index].alamat,
+                          mstdebitur[index].alamat,
                         ),
                         Text(
-                          nasabah[index].no_ktp,
+                          mstdebitur[index].relationship,
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -45,10 +45,10 @@ class ListDebitur extends StatelessWidget {
                                           actions: [
                                             TextButton(
                                                 child: Text('hapus'),
-                                                onPressed: () async {
-                                                  api.deleteNasabah(nasabah[index].id);
-                                                  Navigator.of(context).pop();
-                                                }
+                                                // onPressed: () async {
+                                                //   api.deleteNasabah(mstdebitur[index].nik);
+                                                //   Navigator.of(context).pop();
+                                                // }
                                             ),
                                             TextButton(
                                                 child: Text('tidak'),
@@ -73,7 +73,7 @@ class ListDebitur extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          DetailDebitur(nasabah: nasabah[index]),
+                                          DetailDebitur(mstdebitur: mstdebitur[index]),
                                     ),
                                   );
                                 },

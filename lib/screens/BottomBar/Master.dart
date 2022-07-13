@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/screens/BottomBar/BottomBarMenu/chek.dart';
+import 'package:flutter_auth/screens/BottomBar/BottomBarMenu/hasilnot.dart';
 import 'package:flutter_auth/screens/BottomBar/BottomBarMenu/notification.dart';
 import 'package:flutter_auth/screens/BottomBar/BottomBarMenu/setting.dart';
 import 'package:flutter_auth/screens/dashboard.dart';
+
 
 class BottomBar extends StatefulWidget {
   @override
@@ -9,7 +12,8 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int currentTab = 0;
+  int currentTab = 1;
+
   final List<Widget> screen = [
     Dashboard(),
   ];
@@ -45,21 +49,21 @@ class _BottomBarState extends State<BottomBar> {
                       onPressed: () {
                         setState(() {
                           currentScreen = Dashboard();
-                          currentTab = 0;
+                          currentTab = 1;
                         });
-                      }, // mohon maaf bukan di pages ini sepertinya
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.home,
-                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                            color: currentTab == 1 ? Colors.blue.shade900 : Colors.grey,
                           ),
                           Text(
                             'Home',
                             style: TextStyle(
                               color:
-                                  currentTab == 0 ? Colors.blue : Colors.grey,
+                                  currentTab == 1 ? Colors.blue.shade900 : Colors.grey,
                             ),
                           )
                         ],
@@ -68,8 +72,8 @@ class _BottomBarState extends State<BottomBar> {
                       minWidth: 40,
                       onPressed: () {
                         setState(() {
-                          currentScreen = Dashboard();
-                          currentTab = 0;
+                          currentScreen = HasilNot();
+                          currentTab = 2;
                         });
                       },
                       child: Column(
@@ -77,13 +81,13 @@ class _BottomBarState extends State<BottomBar> {
                         children: [
                           Icon(
                             Icons.recent_actors,
-                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                            color: currentTab == 2 ? Colors.blue.shade900 : Colors.grey,
                           ),
                           Text(
                             'Riwayat',
                             style: TextStyle(
                               color:
-                                  currentTab == 0 ? Colors.blue : Colors.grey,
+                                  currentTab == 2 ? Colors.blue.shade900 : Colors.grey,
                             ),
                           )
                         ],
@@ -97,8 +101,8 @@ class _BottomBarState extends State<BottomBar> {
                       minWidth: 40,
                       onPressed: () {
                         setState(() {
-                          currentScreen = Notice();
-                          currentTab = 0;
+                          currentScreen = MyApp();
+                          currentTab = 3;
                         });
                       },
                       child: Column(
@@ -106,13 +110,13 @@ class _BottomBarState extends State<BottomBar> {
                         children: [
                           Icon(
                             Icons.message,
-                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                            color: currentTab == 3 ? Colors.blue.shade900 : Colors.grey,
                           ),
                           Text(
                             'Notice',
                             style: TextStyle(
                               color:
-                                  currentTab == 0 ? Colors.blue : Colors.grey,
+                                  currentTab == 3 ? Colors.blue.shade900 : Colors.grey,
                             ),
                           )
                         ],
@@ -122,7 +126,7 @@ class _BottomBarState extends State<BottomBar> {
                       onPressed: () {
                         setState(() {
                           currentScreen = Setting();
-                          currentTab = 0;
+                          currentTab = 4;
                         });
                       },
                       child: Column(
@@ -130,13 +134,13 @@ class _BottomBarState extends State<BottomBar> {
                         children: [
                           Icon(
                             Icons.settings,
-                            color: currentTab == 0 ? Colors.blue : Colors.grey,
+                            color: currentTab == 4 ? Colors.blue.shade900 : Colors.grey,
                           ),
                           Text(
                             'Setting',
                             style: TextStyle(
                               color:
-                                  currentTab == 0 ? Colors.blue : Colors.grey,
+                                  currentTab == 4 ? Colors.blue.shade900 : Colors.grey,
                             ),
                           )
                         ],
@@ -149,4 +153,5 @@ class _BottomBarState extends State<BottomBar> {
       ),
     );
   }
-}
+  }
+
