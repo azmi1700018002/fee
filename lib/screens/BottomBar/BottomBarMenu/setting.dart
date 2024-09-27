@@ -4,7 +4,6 @@ import 'package:flutter_auth/screens/login.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_auth/network/api.dart';
-
 class Setting extends StatefulWidget {
   @override
   _SettingState createState() => _SettingState();
